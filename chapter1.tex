@@ -1,0 +1,164 @@
+\chapter{Общие сведения}
+
+Обозначения, используемые в этой главе:
+\begin{itemize}
+\item Величины без риски: реальные траектории систем
+\item Величины с рисками: предсказанные траектории
+\item $L$-стоимость перехода
+\item $(\cdot;t)$ - значение, предсказанное в момент $t$
+\item $T$ - горизонт предсказания
+\item Оптимальное значение функции $J^*(x(t)) = J(x(t), \bar u^*(t))$
+\end{itemize}
+
+\section{Терминальная задача MPC}
+
+Приведем математическую формулировку для задачи с нулевым терминальным множеством:
+
+Системная динамика: $\dot x = f(x,u), \ x(0) = x_0, \ x,u \in \mathbb{R}^n$
+
+Ограничения: $x(t) \in X, \ u \in U, \ \forall t \geq 0$
+
+Предположения:
+\begin{itemize}
+\item $f(0,0) \Rightarrow x_1=0 $-- точка равновесия для $u_1 = 0$
+\item $f: \mathbb{R}^n \times \mathbb{R}^m \to \mathbb{R}^n$ -- дважды непрерывно дифференцируема 
+\item $U$ компактное множество (ограниченное и замкнутое)
+\item $X$ связанное и закрытое множество
+\item $(0,0) \in int(X \times U)$ 
+\end{itemize}
+
+Задача MPC:
+
+В момент $t$, дано начальное состояние $x(t)$
+\begin{equation*}
+\min_{\bar u(\cdot,t)} J(x(t),\bar u(\cdot ;t))
+\end{equation*}
+with $J(x(t),\bar u(\cdot;t)) = \int_{t}^{t+T}L(\bar x(\tau;t),\bar u(\tau;t))d\tau$
+
+такое, что
+
+\begin{equation*}
+\dot{\bar x} = f(x,u), \bar x(t;t) = x(t)
+\end{equation*}
+\begin{equation*}
+\bar u(\tau;t) \in U, \bar x(\tau;t) \in X, \  \forall \tau \in [t, t +T] 
+\end{equation*}
+\begin{equation*}
+\bar x(t+T;t) = 0
+\end{equation*}
+
+Оптимальное управление открытой системы: 
+\begin{equation*}
+\bar u^* (\cdot;t) = arg\ min_{\bar u(\cdot;t)} J(x(t), \bar u(\cdot; t))
+\end{equation*}
+
+Отметим, что настоящая траектория системы может отличаться
+от предсказанной
+
+Предположения:
+\begin{itemize}
+\item $L: \mathbb{R}^n \times \mathbb{R}^m \to \mathbb{R}$ непрерывная и 
+\begin{equation}
+\left \{
+  \begin{tabular}{c}
+  $L(0,0)=0$ \\
+  $L(x,u) > 0$ \\
+  $\forall (x,u) \neq (0,0)$
+  \end{tabular}
+ \right.
+\end{equation}
+\item $J^*(x)$ непрерывна в точке $x=0$
+\end{itemize}
+
+Алгоритм MPC
+\begin{enumerate}
+\item В момент времени $t$, вычисляем $x(t)$ и решаем оптимизационную задачу MPC 
+\item Применяем $u_{MPC}(\tau) = \bar u^*(\tau, t) \forall t \in [t, t+\delta)$ на временном промежутке $\delta$
+\item Устанавливаем $t := t + \delta $ и переходим к шагу 1
+\end{enumerate}
+
+
+Достижимость: Задача MPC достижима в момент времени $t$
+если существует хотя бы одно управление $\bar u(\cdot; t)$, удовлетворяющее ограничениям.
+
+\begin{Theorem}
+Предположим, что
+\begin{enumerate}
+\item предположения выполняются 
+\item задача с нулевым терминальным множеством достижима
+в момент времени $t = 0$
+\end{enumerate}
+Тогда верно следующее: 
+\begin{itemize}
+\item задача MPC рекуррентно достижима 
+\item получаемая в результате замкнутая система 
+является асимптотически стабильной
+\end{itemize}
+
+Пусть $D \subset \mathbb{R}^n$ является множеством всех
+точек, где выполняется (??). Тогда $D$ называется 
+областью притяжения замкнутой системы.
+
+
+Приведем идею доказательства, представленной выше теоремы, так
+как такой это универсальный подход и он еще будет использоваться в
+дальнейшем для наших целей.
+
+\begin{proof}
+
+\begin{enumerate}
+\item рекуррентная достижимость доказывается по индукции 
+\item 
+\begin{itemize}
+\item достижима в $t=0$ по предположению индукции
+\item допустим, что достижима в момент $t$. Рассмотрим следующее 
+управление:
+\begin{equation*}
+\bar u(\tau; t+\delta) =
+\left \{
+  \begin{tabular}{c}
+  $\bar u^*(\tau;t) \ \tau \in [t+\delta, t+ T]$ \\
+  $0 \ \tau \in [t+T, t+\delta+T]$ 
+  \end{tabular}
+  \right.
+\end{equation*}
+\end{itemize}
+\item асимптотическая стабильность 
+
+Идея в использовании функции $J^*(x(t))$ в качестве функции
+Ляпунова.
+
+Рассмотрим: 
+\begin{equation*}
+J(x(t+\delta), \bar u(\cdot;t+\delta)) = \int_{t+\delta}^{t+\delta + T} L(\bar x(\tau;t+\delta), \bar u(\tau; t+\delta))d\tau=
+\end{equation*} 
+\begin{equation*}
+= \int_{t+\delta}^{t+T}L(\bar x^*(\tau;t), \bar u^*(\tau;t))d\tau + \int_{t+T}^{t+\delta+T}L(0,0)d\tau (=0) = 
+\end{equation*}
+\begin{equation*}
+= J^*(x(t)) - \int_{t}^{t+\delta} L(\bar x^*(\tau;t), \bar u^*(\tau;t))d\tau
+\end{equation*}
+из оптимальности 
+\begin{equation*}
+J^*(x(t+\delta)) \leq J(x(t+\delta), \bar u(\cdot;t+\delta)) \leq J^*(x(t)) - \int_{t}^{t+\delta} L(\bar x^*(\tau;t), \bar u^*(\tau;t))d \tau
+\end{equation*}
+по индукции
+\begin{equation*}
+J^*(x(\infty)) (\geq 0) \leq J^*(x(0)) (finite) - \int_0^{\infty}L(x_{MPC}(\tau), u_{MPC}(\tau))d\tau
+\end{equation*}
+\end{enumerate}
+\end{proof}
+\end{Theorem}
+
+\begin{Lemma}[Barbalat's]
+
+$\phi$ uniformly continuous $\phi: \mathbb{R} \to \mathbb{R}_{\geq 0}$
+\begin{equation*}
+\lim_{t \to \infty} \int_0^t \phi(\tau)d\tau < \infty \Rightarrow \phi(t)\to 0, t \to \infty
+\end{equation*}
+\end{Lemma}
+Из леммы Barbalat's
+$L \to 0 $ при $t \to \infty \Rightarrow $. Следовательно 
+мы получаем, что $\|x_{MPC}(t)\| \to 0$ при $t \to \infty \Rightarrow$, что и означает сходимость.
+
+
