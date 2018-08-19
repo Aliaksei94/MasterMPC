@@ -1,63 +1,67 @@
-\section{Неогрниченный MPC}\label{chap3}
+\section{Неограниченный MPC}\label{chap3}
 
-Цель: гарантировать стабильность + оценить на сколько управление MPC
-отличается от оптимального
+Неограниченный MPC ставит перед собой задачу гарантировать стабильность и оценить на сколько управление MPC отличается от оптимального. ЗДесь нет ограничений на состояния, поэтому терминальные ингредиенты не вводятся.
 
 Постановка задачи: 
 \begin{itemize}
-\item $\dot x = f(x,u), x(0)=x_0$
-\item ограничения на управление $u(t) \in \mathbb{U} \subseteq \mathbb{R}^m \ \forall t \geq 0$
+\item Система строится на основе динамики $\dot x = f(x,u), x(0)=x_0, \ x \in \mathbb{R}^n$
+\item Ограничения вводятся на управление $u(t) \in \mathbb{U} \subseteq \mathbb{R}^m \ \forall t \geq 0$
 \end{itemize}
 
-
 Функция стоимости на бесконечном горизонте
-$J_{\infty}(x_0, \bar{u}(\cdot; 0)) = \int_{0}^{\infty}L(\bar x(\tau;0), \bar u(\tau;0))d\tau  \Rightarrow$ оптимальное значение функции $J_{\infty}^*(x_0)$
+\begin{equation*}
+J_{\infty}(x_0, \bar{u}(\cdot; 0)) = \int_{0}^{\infty}L(\bar x(\tau;0), \bar u(\tau;0))d\tau
+\end{equation*}
+$\Rightarrow$ оптимальное значение функции $J_{\infty}^*(x_0)$
 
-Предположение: $J^{*}_{\infty}(x_0) < \infty, \forall x_0 \Rightarrow$ система асимптотически стабильна
+Предположение: Если $J^{*}_{\infty}(x_0) < \infty, \forall x_0$, тогда система асимптотически стабильна.
 
 Функция стоимости на конечном горизонте:
-$J_{T}(x(t), \bar{u}(\cdot; t)) = \int_{0}^{T}L(\bar x(\tau;t), \bar u(\tau;t))d\tau$
+\begin{equation*}
+J_{T}(x(t), \bar{u}(\cdot; t)) = \int_{0}^{T}L(\bar x(\tau;t), \bar u(\tau;t))d\tau
+\end{equation*}
 
 Функцию стоимости на бесконечном горизонте получаем,
 как результат применения MPC
+\begin{equation*}
+J_{\infty}^{MPC}(x_0) = \int_{0}^{\infty}L(\bar x_{MPC}(\tau), \bar u_{MPC}(\tau))d\tau
+\end{equation*}
 
-$J_{\infty}^{MPC}(x_0) = \int_{0}^{\infty}L(\bar x_{MPC}(\tau), \bar u_{MPC}(\tau))d\tau$
-
-\begin{definition}
 Индекс субоптимальности $\alpha$:
-$\alpha J_{\infty}^{MPC}(x_0) \leq J_{\infty}^{*}(x_0) \forall x_0$
+
+$\alpha J_{\infty}^{MPC}(x_0) \leq J_{\infty}^{*}(x_0) \ \forall x_0$
 
 \begin{itemize}
 \item $\alpha \leq 1$ следует из оптимальности $J^{*}_{\infty}$
-\item $\alpha > 0$ дает стабильность замнкнутой сиистемы (лемма Барбашина???)
+\item $\alpha > 0$ дает стабильность замнкнутой сиистемы
 \end{itemize}
-\end{definition}
-
  
 Предположим, что существует $\alpha \in (0,1]$ такое что $\forall x \in \mathbb{R}^n$
 
-$J_{T}^{*}(x(t+\delta)) \leq J_T^*(x(t)) - \alpha\int_{t}^{t+\delta}L(\bar x^*(\tau;t),\bar u^*(\tau;t))d\tau \ \ \ (*)$
+\begin{equation}\label{sub_opt_ineq}
+J_{T}^{*}(x(t+\delta)) \leq J_T^*(x(t)) - \alpha\int_{t}^{t+\delta}L(\bar x^*(\tau;t),\bar u^*(\tau;t))d\tau 
+\end{equation}
 
 Тогда для всех $x \in \mathbb{R}^n$ верна следующая цепочка неравенств 
-\begin{equation}\label{main_inequility}
+\begin{equation*}
 \alpha J_{\infty}^*(x(t)) \leq \alpha J_{\infty}^{MPC}(x(t)) \leq J_T^*(x(t)) \leq J_{\infty}^*(x(t))
-\end{equation}
+\end{equation*}
 
-Введем обозначение
+Введем обозначение оптимальной функции стоимости перехода
 $L^*(t;t) = L(\bar x^*(\tau;t), \bar u^*(\tau;t))$
 
-Рассмотрим следующие два уравнения:
+Рассмотрим следующие два неравенства:
 
 \begin{equation}\label{c_b_inequality}
-(c): J_T^*(x(t+\delta)) \leq \frac{1}{\epsilon} \int_{t+\delta}^{t+T}L^*(\tau;t)d\tau :(b)
+J_T^*(x(t+\delta)) \leq \frac{1}{\epsilon} \int_{t+\delta}^{t+T}L^*(\tau;t)d\tau 
 \end{equation}
 \begin{equation}\label{b_a_inequality}
-(b): \int_{t+\delta}^{t+T}L^*(\tau;t)d\tau \leq \gamma \int_{t}^{t+\delta}L^*(\tau;t)d\tau :(a)
+\int_{t+\delta}^{t+T}L^*(\tau;t)d\tau \leq \gamma \int_{t}^{t+\delta}L^*(\tau;t)d\tau 
 \end{equation} 
 
 \begin{theorem}
 
-Предположим, что существуют $\epsilon \in (0;1]$ и $\gamma > 0$ такие что \ref{c_b_inequality} - \ref{b_a_inequality} выполняется. Тогда (*) выполняется
+Предположим, что существуют $\epsilon \in (0;1]$ и $\gamma > 0$ такие что \ref{c_b_inequality} - \ref{b_a_inequality} выполняется. Тогда (\ref{sub_opt_ineq}) выполняется
 при $\alpha =1 - \gamma \frac{1-\epsilon}{\epsilon}$
 \begin{equation*}
 J_T^*(x(t+\delta)) - J_T^*(x(t)) = J_T^*(x(t+\delta)) - \int_{t}^{t+T}L^*(\tau;t)d\tau \leq^{(\ref{c_b_inequality})}
@@ -68,30 +72,31 @@ J_T^*(x(t+\delta)) - J_T^*(x(t)) = J_T^*(x(t+\delta)) - \int_{t}^{t+T}L^*(\tau;t
 \begin{equation*}
 \leq (\gamma \frac{1-\epsilon}{\epsilon} - 1) \int_t^{t+\delta}L^*(\tau;t)d\tau
 \end{equation*} 
-$-\alpha := \gamma \frac{1-\epsilon}{\epsilon} - 1$ 
+Тогда сейчас мы можем обозначить
+$\alpha := 1 - \gamma \frac{1-\epsilon}{\epsilon}$ и получить неравенство (\ref{sub_opt_ineq}).
 \end{theorem}
 
 Предположение 1: Асимптотическая управляемость
 
-Для всех x, существует некое управление $\hat u_x(\cdot)$
-удовлетворяющее $\hat u_x(t) \in \mathbb{U}, \forall t \geq 0$ такое что
+Для всех $x$, существует некое управление $\hat u_x(\cdot)$, 
+удовлетворяющее $\hat u_x(t) \in \mathbb{U},\ \forall t \geq 0$ такое что
 \begin{equation*}
-L(\hat x(t),\hat u(t)) \leq \beta(t) \min_u L(x,u), \forall t > 0
+L(\hat x(t),\hat u(t)) \leq \beta(t) \min_u L(x,u), \ \forall t > 0
 \end{equation*}
 где $\beta: \mathbb{R} \to \mathbb{R}_{\geq 0}$
- - непрерывная, положительная, строго убывающая с $\lim_{t \to 0} \beta(t) = 0$ $\Rightarrow$
-$\int_0^{\infty}\beta(\tau)d\tau < \infty$
-$B(t) = \int_0^t\beta(\tau)d\tau$
+ - непрерывная, положительная, строго убывающая и $\lim_{t \to 0} \beta(t) = 0$ 
 
+$\Rightarrow$ из этого следует, что
+$\int_0^{\infty}\beta(\tau)d\tau < \infty$, а тогда обозначим этот интеграл как
+$B(t) = \int_0^t\beta(\tau)d\tau$.
 
-
-Сейчас покажем, как найти  $\epsilon$ и $\gamma$:
+Необходимо показать,как найти  $\epsilon$ и $\gamma$:
 
 \begin{Lemma} 
 Пусть предположение 1 выполняется. Тогда неравенство 
-\begin{equation}\label{lemma_1_inequality}
+\begin{equation*}
 J_T^*(x(t+\delta)) \leq \int_{t+\delta}^{t+t'}L^*(\tau;t)d\tau + B(T+\delta - t')L^*(t+t';t)
-\end{equation}
+\end{equation*}
 верно для всех $t' \in [\delta,T]$
 \end{Lemma}
 
@@ -105,23 +110,24 @@ J^*_T(x(t+\delta)) \leq \min_{t' \in [\delta,T]}(\int_{t+\delta}^{t+t'}L^*(\tau;
 \end{equation*}
 так как
 $\min_{t'\in[\delta,T]}L^*(t+t';t) \leq \frac{1}{T-\delta}\int_{t+\delta}^{t+T}L^*(\tau;t)d\tau$
-минимум менее или равен среднему
+минимум менее или равен среднему значению, получим
 \begin{equation*}
 =(1+\frac{B(T)}{T-\delta})\int_{t+\delta}^{t+T}L^*(\tau;t)d\tau
 \end{equation*}
-$(1+\frac{B(T)}{T-\delta}) = \frac{1}{\epsilon}$
-
+А тогда мы имеем
+$(1+\frac{B(T)}{T-\delta}) = \frac{1}{\epsilon}$, т.е. $\frac{1-\epsilon}{\epsilon} = \frac{B(T)}{T-\delta}$.
 
 Аналогичным способом найдем, чему равно $\gamma$.
 \begin{Lemma}
-
+Пусть предположение 1 выполняется. Тогда неравенство 
 \begin{equation*}
-\int_{t+t'}^{t+T}L^*(\tau;t)d\tau \leq B(T-t')L^*(t+t';t) \forall t' \in [0;T]
+\int_{t+t'}^{t+T}L^*(\tau;t)d\tau \leq B(T-t')L^*(t+t';t)
 \end{equation*}
+верно для всех $t' \in [0;T]$
 \end{Lemma}
 
-$$\gamma = \frac{B(T)}{\delta}$$
+Тем же способом как и получили $\epsilon$, найдем $\gamma = \frac{B(T)}{\delta}$ с помощью предыдущей леммы. 
 
-В результате
+В результате получим $\alpha = 1 - \gamma \frac{1-\epsilon}{\epsilon} = 1 - \frac{B(T)}{\delta}(\frac{B(T)}{T-\delta})$.
 
-$$\alpha = 1 - \gamma \frac{1-\epsilon}{\epsilon} = 1 - \frac{B(T)}{\delta}(\frac{B(T)}{T-\delta})$$
+При $ T \to \infty $ наша оценка для $ \epsilon \to 1$, а значит из этого следует $\alpha \to 1$ при $ T \to \infty$, тогда из этого будет следовать замкнутая стабильность при достаточно большом $T$.
