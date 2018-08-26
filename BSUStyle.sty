@@ -3,7 +3,7 @@
 \RequirePackage[russian]{babel}
 \RequirePackage{indentfirst}
 \RequirePackage{graphicx}
-\RequirePackage{amsmath,amsfonts,amssymb}
+\RequirePackage{amsmath,amsfonts,amssymb,bbm}
 \RequirePackage{cite}
 
 
@@ -11,7 +11,6 @@
 \RequirePackage{tikz}
 \usetikzlibrary{positioning}
 
-\RequirePackage{amsmath,amsfonts,amssymb,bbm}
 \RequirePackage{geometry}
 \geometry{left=3cm}               % левое поле
 \geometry{right=1cm}              % правое поле
@@ -31,15 +30,6 @@
 % ТЕОРЕМЫ ИТД
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\newtheorem{defn}{Definition}
-\newtheorem{reg}{Rule}
-\newtheorem{exer}{Exercise}
-\newtheorem{note}{Note}
-\newtheorem{Theorem}{Theorem}[section]
-%\newtheorem{corollary}{Corollary}
-\newtheorem{Lemma}{Lemma}
-%\newtheorem*{Example}{Example}
-
 \newtheorem{theorem}{Теорема}[chapter]
 \newtheorem{corollary}{Следствие}[chapter]
 \newtheorem{lemma}{Лемма}[chapter]
@@ -49,10 +39,8 @@
 \newtheorem{example}{Пример}[chapter]
 \newtheorem{definition}{Определение}[chapter]
 
-
-
-\newcommand{\proof}{\par\mbox{Доказательство.}\hspace{2mm}}
-\newcommand{\proofnp}{\par\mbox{Доказательство}\hspace{2mm}}
+\newcommand{\proof}{\small \mbox{Д о к а з а т е л ь с т в о \ }}
+\newcommand{\proofend}{\hfill $\square$ \vspace{3mm} \normalsize}
 
 \def\@begintheorem#1#2{\trivlist \item[\hskip \labelsep {\hspace*{\parindent} \bf #1\ #2}]}
 
@@ -94,7 +82,7 @@
 
 
 \addto\captionsrussian{\def\contentsname{\centerline{ОГЛАВЛЕНИЕ\vspace{-2em}}}}
-\setcounter{tocdepth}{1}
+\setcounter{tocdepth}{2}
 
 \RequirePackage{titletoc}
 
@@ -124,11 +112,25 @@
 %  МАТЕМАТИЧЕСКИЕ
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
 \newcommand{\rank}{\mathop{\rm rank}\nolimits}
 \newcommand{\diag}{\mathop{\rm diag}\nolimits}
 \newcommand{\dett}{\mathop{\rm det}\nolimits}
 \newcommand{\intt}{\mathop{\rm int}\nolimits}
 \newcommand{\sign}{\mathop{\rm sign}\nolimits}
+\newcommand{\extr}{\mathop{\rm extr}\nolimits}
+\newcommand{\aff}{\mathop{\rm aff}\nolimits}
+\newcommand{\conv}{\mathop{\rm conv}\nolimits}
+\newcommand{\tr}{\mathop{\rm tr}\nolimits}
+\newcommand{\dom}{\mathop{\rm dom}\nolimits}
+\newcommand{\epi}{\mathop{\rm epi}\nolimits}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sd}{\mathbb{S}_+}
+\newcommand{\Pd}{\mathbb{S}_{++}}
+\newcommand{\st}{\mathop{\textrm{ subject to} \ \ }}
+%\newcommand{\st}{\textrm{при} \ \ }
+\newcommand{\wave}{\qquad \rightsquigarrow \qquad }
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  ТИТУЛЬНЫЙ ЛИСТ
@@ -173,13 +175,12 @@
 
 \vspace {1 cm}
 
-%\noindent\begin{minipage}[t]{0.7\textwidth}
-%Допущена к защите \\ \vskip 0.1em
-%<<\rule{1 cm}{0,2 pt}>> \rule{4 cm}{0,2 pt} {\the\year \ г.}  \\
-%Зав. кафедрой методов оптимального управления \\
-%канд. физ.-мат. наук, доцент Н.М. Дмитрук
-%\end{minipage}
-
+\noindent\begin{minipage}[t]{0.7\textwidth}
+Допущена к защите \\ \vskip 0.1em
+<<\rule{1 cm}{0,2 pt}>> \rule{4 cm}{0,2 pt} {\the\year \ г.}  \\
+Зав. кафедрой методов оптимального управления \\
+канд. физ.-мат. наук, доцент Н.М. Дмитрук
+\end{minipage}
 \vfill
 
 \centerline{Минск \the\year}
