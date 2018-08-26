@@ -115,7 +115,7 @@ $B(t)$, $t\ge t_0$, при рассмотрении недетерминированной модели (см. разд.~\ref{
 \begin{equation}\label{eq:sin_gen}
 \begin{split}
 &b_i(t) = k_{i0} + k_i t + \alpha_i \sin(r_i + g_i t); \\
-&s_i(t) = 0.99 b_i(t).
+&s_i(t) = 0.95 b_i(t).
 \end{split}
 \end{equation}
 
@@ -192,10 +192,11 @@ $$
 
 В процессе прогнозирования вычисляется ошибка следующим образом
 $$
-    e(t) = \frac{x_{predicted}(t)-x_{real}(t)}{x_{real}(t)}.
+    e_i = \frac{p_i-p_i^*}{p_i}.
     $$
 
-Данная ошибка была подсчитана для прогнозирования {\bf(УКАЗАТЬ КАКИЕ ДАННЫЕ)} от одного до шести шагов вперед.
+Данная ошибка была подсчитана для прогнозирования 
+стоимости криптовалют от одного до шести шагов вперед.
 На рисунке~\ref{fig:pred} изображены распределения ошибок прогнозирование будущих стоимостей продаж ценных
 бумаг.
 
@@ -204,37 +205,31 @@ $$
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred1}
   \caption{На 1 шаг}
-  \label{fig:sfig1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred2}
   \caption{На 2 шага}
-  \label{fig:sfig2}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred3}
   \caption{На 3 шага}
-  \label{fig:sfig1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred4}
   \caption{На 4 шага}
-  \label{fig:sfig2}
 \end{subfigure}
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred5}
   \caption{На 5 шагов}
-  \label{fig:sfig1}
 \end{subfigure}%
 \begin{subfigure}{.5\textwidth}
   \centering
   \includegraphics[width=.8\linewidth]{figs/pred6}
   \caption{На 6 шагов}
-  \label{fig:sfig2}
 \end{subfigure}
 \caption{Распределение ошибок предсказания}
 \label{fig:pred}
@@ -356,7 +351,7 @@ $$
 $$
     L(U^+(t), U^-(t)) = \alpha( B(t)^T U^+(t) + S(t)^T U^-(t))^2,
     $$
-которая характеризует весь оборот денег, произошедший  в момент времени $t$, то графики изменятся (для $\alpha=0.01$) как представлено на рисунке \ref{fig:det_reg}.
+которая характеризует весь оборот денег, произошедший  в момент времени $t$, то графики изменятся (для $\alpha=0.001$) как представлено на рисунке \ref{fig:det_reg}.
 
 
 
@@ -590,6 +585,13 @@ L(U^+(t),U^-(t)) = \alpha\left( \langle\bar B(t)^T D[E(t)], U^+(t)\rangle^2 + \l
 (\ref{fig:nodet_no_reg_no_term_s_b}). То есть модель
 не нуждается ни в регуляризации, ни в терминальном 
 регионе.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/no_det_no_term_not_regul_s_b}
+  \caption{Недетерменированная модель с регуляризацией}
+  \label{fig:nodet_no_reg_no_term_s_b}
+\end{figure}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Терминальный регион}\label{sec:nondet}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -632,4 +634,10 @@ $$
 \end{split}
 \end{equation}
 
+\begin{figure}
+  \centering
+  \includegraphics[width=\linewidth]{figs/nodet_term_reg_a_35}
+  \caption{Недетерменированная модель с регуляризацией}
+  \label{fig:nodet_term_reg_a_35}
+\end{figure}
 
